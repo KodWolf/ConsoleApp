@@ -8,14 +8,14 @@
 
     public void Generate()
     {
-
-        Console.WriteLine($"--- Generating {Format} Report: {Title} ---");
-        Console.WriteLine($"Headers: {string.Join(", ", Headers)}");
-        Console.WriteLine($"Content: {string.Join(" | ", Contents)}");
-        Console.WriteLine($"Footers: {string.Join(", ", Footers)}");
-        Console.WriteLine("Report saved successfully.\n");
+        Console.WriteLine($"--- Генерация {Format} отчёта: {Title} ---");
+        Console.WriteLine($"Заголовки: {string.Join(", ", Headers)}");
+        Console.WriteLine($"Содержание: {string.Join(" | ", Contents)}");
+        Console.WriteLine($"Нижние колонтитулы: {string.Join(", ", Footers)}");
+        Console.WriteLine("Отчёт успешно сохранён.\n");
     }
 }
+
 public interface IReportBuilder
 {
     void SetTitle(string title);
@@ -39,10 +39,11 @@ public class ReportBuilder : IReportBuilder
     public Report GetReport()
     {
         Report finishedReport = _report;
-        _report = new Report(); 
+        _report = new Report();
         return finishedReport;
     }
 }
+
 public class ReportDirector
 {
     private readonly IReportBuilder _builder;
@@ -51,27 +52,28 @@ public class ReportDirector
 
     public void ConstructSalesReport()
     {
-        _builder.SetTitle("Sales Performance Report");
-        _builder.AddHeader("Q1 Regional Sales");
-        _builder.AddContent("Chart", "Sales Growth 2024");
-        _builder.AddContent("Table", "Revenue by Product");
+        _builder.SetTitle("Отчёт о продажах");
+        _builder.AddHeader("Региональные продажи за Q1");
+        _builder.AddContent("Диаграмма", "Рост продаж 2024");
+        _builder.AddContent("Таблица", "Выручка по продуктам");
         _builder.SetFormat("PDF");
     }
 
     public void ConstructFinancialReport()
     {
-        _builder.SetTitle("Annual Financial Statement");
-        _builder.AddContent("Table", "Balance Sheet");
+        _builder.SetTitle("Годовой финансовый отчёт");
+        _builder.AddContent("Таблица", "Бухгалтерский баланс");
         _builder.SetFormat("Excel");
     }
 
     public void ConstructEmployeeReport()
     {
-        _builder.SetTitle("Staffing and HR Statistics");
-        _builder.AddContent("Table", "Employee List");
+        _builder.SetTitle("Статистика персонала");
+        _builder.AddContent("Таблица", "Список сотрудников");
         _builder.SetFormat("HTML");
     }
 }
+
 class Program
 {
     static void Main()
@@ -83,9 +85,9 @@ class Program
         Report salesReport = builder.GetReport();
         salesReport.Generate();
 
-        builder.SetTitle("Custom Research Report");
-        builder.AddHeader("Author: K.I. Satbayev University");
-        builder.AddContent("Diagram", "Technical Growth Curve");
+        builder.SetTitle("Пользовательский исследовательский отчёт");
+        builder.AddHeader("Автор: КазНИТУ имени К.И. Сатпаева");
+        builder.AddContent("Диаграмма", "Кривая технического роста");
         builder.SetFormat("PDF");
 
         Report customReport = builder.GetReport();
